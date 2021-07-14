@@ -26,9 +26,8 @@ function RickAndMorty(props) {
     const [ current, send ] = useMachine(ramMachine, options)
     return (
       <Flex center height="100vh">
-        {current.context.results.length === 0 && (
+        
           <Box py={3}>
-            {/* <Box>{current.}</Box> */}
             <Box px={2} mb={3}>
               <Label htmlFor='email'>Character Name</Label>
               <Input
@@ -41,14 +40,16 @@ function RickAndMorty(props) {
             <Box px={2} ml='auto'>
               <Button variant="grey" onClick={() => send({ type: 'SUBMIT', msg: 'sending name'})}>Search: {current.context.msg}</Button>
             </Box>
+            <div className="results">
             {Object.keys(current.context.info).length > 0 && (
               <Box px={2}>
                 <p>Count: {current.context.info.count}</p>
                 <p>Pages: {current.context.info.pages}</p>
               </Box>
             )}
+            </div>
           </Box>
-        )}
+        
         {current.context.results.length > 0 && (
           <Flex px={2} flexWrap="wrap" height="100%" center>
             {current.context.results.map(char => (

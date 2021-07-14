@@ -2,6 +2,9 @@ import Head from 'next/head'
 import Layout, { siteTitle } from '../components/layout'
 import utilStyles from '../styles/utils.module.css'
 import { getSortedPostsData } from '../lib/posts'
+import Date from '../components/date'
+import Link from 'next/link'
+import React from 'react'
 
 export async function getStaticProps() {
   const allPostsData = getSortedPostsData()
@@ -11,8 +14,17 @@ export async function getStaticProps() {
     }
   }
 }
-
+const MyButton = React.forwardRef(({ onClick, href, title }, ref) => {
+  return (
+    <button onClick={onClick} ref={ref}>
+      {title}
+    </button>
+  )
+})
 export default function Home({ allPostsData }) {
+  const onClick=(id)=>{
+    document.location.href=`posts/${id}`;
+  }
   return (
     <Layout home>
       {/* Keep the existing code here */}
@@ -23,11 +35,13 @@ export default function Home({ allPostsData }) {
         <ul className={utilStyles.list}>
           {allPostsData.map(({ id, date, title }) => (
             <li className={utilStyles.listItem} key={id}>
-              {title}
+              <Link href={`posts/${id}`} passHref>
+                <MyButton title={title} onClick={()=>onClick(id)}/>
+                </Link>
               <br />
               {id}
               <br />
-              {date}
+      <Date dateString={date} />
             </li>
           ))}
         </ul>

@@ -104,7 +104,10 @@ export const options = {
   services: {
     getCharacter: (ctx, evt) => fetch(`https://rickandmortyapi.com/api/character/?name=${ctx.name}`)
       .then(res => res.json())
-  }
+  },
+  
+    devTools: true,
+  
 }
 
 
